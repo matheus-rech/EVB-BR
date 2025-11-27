@@ -1,0 +1,52 @@
+name: Sync from HuggingFace
+
+# This workflow can be manually triggered to sync content from HuggingFace Space
+# Note: This is a template and may need adjustments based on your specific needs
+
+on:
+  workflow_dispatch:  # Allows manual triggering from GitHub Actions tab
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sunday at midnight (optional)
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Install git-xet
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/huggingface/xet-core/refs/heads/main/git_xet/install.sh | sh
+          git xet install
+      
+      - name: Clone HuggingFace Space
+        run: |
+          cd /tmp
+          git clone https://huggingface.co/spaces/mmrech/evb-br evb-br-source
+      
+      - name: Copy files to repository
+        run: |
+          # Copy all files except .git directory
+          rsync -av --exclude='.git' --exclude='.github' /tmp/evb-br-source/ ./
+      
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --quiet || echo "changes=true" >> $GITHUB_OUTPUT
+      
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Sync from HuggingFace Space [automated]"
+          git push
+      
+      - name: No changes detected
+        if: steps.check_changes.outputs.changes != 'true'
+        run: echo "No changes detected. Repository is up to date."
