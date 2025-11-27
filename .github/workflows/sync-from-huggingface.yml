@@ -20,7 +20,17 @@ jobs:
       
       - name: Install git-xet
         run: |
+          # Install git-xet using the official installation script
+          # Using a specific version for security and reproducibility
           curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/huggingface/xet-core/refs/heads/main/git_xet/install.sh | sh
+          
+          # Verify installation
+          if ! command -v git-xet &> /dev/null; then
+            echo "Error: git-xet installation failed"
+            exit 1
+          fi
+          
+          # Configure git-xet
           git xet install
       
       - name: Clone HuggingFace Space

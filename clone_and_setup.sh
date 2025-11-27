@@ -37,7 +37,10 @@ echo ""
 
 # Ensure git-xet is configured
 echo "Configuring git-xet..."
-git xet install 2>&1 || true
+if ! git xet install 2>&1; then
+    echo "⚠️  Warning: git-xet configuration encountered an issue, but continuing..."
+    echo "This may be normal if git-xet is already configured."
+fi
 echo ""
 
 # Clean up any existing temporary directory
