@@ -2,6 +2,14 @@
 
 This repository hosts the codebase from the HuggingFace Space: [mmrech/evb-br](https://huggingface.co/spaces/mmrech/evb-br)
 
+## 📚 Documentation
+
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick reference guide to get started immediately
+- **[SETUP_SUMMARY.md](SETUP_SUMMARY.md)** - Complete overview of what's been set up
+- **[SETUP.md](SETUP.md)** - Detailed manual setup instructions
+- **[GIT_XET_GUIDE.md](GIT_XET_GUIDE.md)** - Git-Xet installation and troubleshooting
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Guidelines for contributing
+
 ## Quick Start
 
 To clone and import the HuggingFace Space codebase to this repository, follow these steps:
