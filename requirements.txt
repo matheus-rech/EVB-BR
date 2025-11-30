@@ -2,6 +2,6 @@ gradio
 transformers
 joblib
 pandas
-numpy==1.21.6
-scikit-learn==1.1.3
+numpy==1.22.0
+scikit-learn==1.5.0
 
